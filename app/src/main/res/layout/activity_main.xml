@@ -43,47 +43,54 @@
             style="@style/Operators_button"
             android:layout_weight="3"
             android:onClick="setOperator"
-            android:text="C"
-            android:textColor="@color/white" />
+            android:text="@string/Clear"
+            android:textColor="@color/white"
+            android:layout_width="0dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDivisao"
             style="@style/Operators_button"
             android:onClick="setOperator"
             android:text="/"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:layout_width="0dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberSeven"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="7" />
+            android:text="@string/_7"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberEight"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="8" />
+            android:text="@string/_8"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberNine"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="9" />
+            android:text="@string/_9"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberMutiplication"
             style="@style/Operators_button"
             android:onClick="setOperator"
-            android:text="x"
-            android:textColor="@color/white" />
+            android:text="@string/x"
+            android:textColor="@color/white"
+            android:layout_width="0dp"/>
 
     </LinearLayout>
 
@@ -97,26 +104,30 @@
             android:id="@+id/numberFour"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="4" />
+            android:text="@string/_4"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberFive"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="5" />
+            android:text="@string/_5"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberSix"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="6" />
+            android:text="@string/_6"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberMinus"
             style="@style/Operators_button"
             android:onClick="setOperator"
-            android:text="-"
-            android:textColor="@color/white" />
+            android:text="@string/menos"
+            android:textColor="@color/white"
+            android:layout_width="0dp"/>
 
     </LinearLayout>
 
@@ -130,25 +141,28 @@
             android:id="@+id/numberOne"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="1" />
+            android:text="@string/_1"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberTwo"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="2" />
+            android:text="@string/_2"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberThree"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="3" />
+            android:text="@string/_3"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberPlus"
             style="@style/Operators_button"
             android:onClick="setOperator"
-            android:text="+"
+            android:text="@string/mais"
             android:textColor="@color/white" />
 
     </LinearLayout>
@@ -163,27 +177,31 @@
             android:id="@+id/dot"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="." />
+            android:text="@string/_ponto"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/numberZero"
             style="@style/Numbers_button"
             android:onClick="setNumber"
-            android:text="0" />
+            android:text="@string/_0"
+            android:layout_width="0dp"/>
 
         <ImageView
             android:id="@+id/delete"
             style="@style/Numbers_button"
             android:onClick="setNumber"
             android:scaleType="center"
-            android:src="@drawable/backspace" />
+            android:src="@drawable/backspace"
+            android:layout_width="0dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/equal"
             style="@style/Operators_button"
             android:onClick="setOperator"
             android:text="="
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:layout_width="0dp"/>
 
     </LinearLayout>
 
