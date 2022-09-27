@@ -11,18 +11,26 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var txtResult: TextView
     private lateinit var txtExpressao: TextView
-    private var resultConta : Double = 0.0;
-    private var oneNumber : Double = 0.0;
-    private var twoNumber : Double = 0.0;
+    private var resultConta : Int = 0;
+    private lateinit var lastOperator : String;
+    private var oneNumber : Int = 0;
+    private var resultExist : Boolean = false;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.txtResult = findViewById(R.id.txtResult)
+        this.txtExpressao = findViewById(R.id.txtExpressao)
 
         supportActionBar?.hide();
     }
 
     fun setNumber(view: View) {
+
+        if(resultExist == true){
+            limparText();
+            resultExist = false;
+        }
+
         val botao = view as Button
         when (view.id) {
             R.id.numberOne ->
@@ -49,11 +57,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setOperator(view: View){
-        val botao = view as Button
-        txtExpressao.text = txtResult.text.toString();
-        when (view.id) {
+        oneNumber = txtResult.text.toString().toInt();
 
+        if(resultExist == false){
+            resultExist = true;
         }
+
+        when (view.id) {
+            R.id.btnLimpar -> {
+                limparText();
+            }
+            R.id.equal ->{
+                calcular(lastOperator);
+            }
+            R.id.numberPlus ->{
+                resultConta += oneNumber
+                txtExpressao.text =  txtExpressao.text.toString() + txtResult.text.toString() +  "+"
+                txtResult.text = resultConta.toString();
+                lastOperator = "+";
+            }
+        }
+
+        Log.d("SUM", resultConta.toString());
+    }
+
+    private fun calcular(lastOperator: String) {
+        when (lastOperator) {
+            "+" -> "";
+            "-" -> "";
+            "x" -> "";
+            "/" -> "";
+        }
+    }
+
+    fun limparText(){
+        txtResult.text = "";
     }
 
 }

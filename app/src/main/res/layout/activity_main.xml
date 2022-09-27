@@ -14,7 +14,6 @@
         android:layout_height="80dp"
         android:ellipsize="start"
         android:gravity="end"
-        android:onClick="setNumber"
         android:orientation="horizontal"
         android:singleLine="true"
         android:textColor="@color/black"
@@ -27,7 +26,6 @@
         android:ellipsize="end"
         android:gravity="end"
         android:maxLines="1"
-        android:onClick="setNumber"
         android:orientation="horizontal"
         android:textColor="@color/black"
         android:textSize="45sp"></TextView>
