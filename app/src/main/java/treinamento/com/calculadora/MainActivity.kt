@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtResult: TextView
     private lateinit var txtExpressao: TextView
     private var resultConta : Int = 0;
-    private var emptyValue : Boolean = true;
+    private lateinit var lastOperator : String;
     private var oneNumber : Int = 0;
     private var resultExist : Boolean = false;
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,14 +67,27 @@ class MainActivity : AppCompatActivity() {
             R.id.btnLimpar -> {
                 limparText();
             }
+            R.id.equal ->{
+                calcular(lastOperator);
+            }
             R.id.numberPlus ->{
                 resultConta += oneNumber
                 txtExpressao.text =  txtExpressao.text.toString() + txtResult.text.toString() +  "+"
                 txtResult.text = resultConta.toString();
+                lastOperator = "+";
             }
         }
 
         Log.d("SUM", resultConta.toString());
+    }
+
+    private fun calcular(lastOperator: String) {
+        when (lastOperator) {
+            "+" -> "";
+            "-" -> "";
+            "x" -> "";
+            "/" -> "";
+        }
     }
 
     fun limparText(){
