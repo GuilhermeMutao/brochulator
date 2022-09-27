@@ -3,5 +3,4 @@
     <item android:drawable="@drawable/shape_numero_pressionado" android:state_pressed="true"></item>
     <item android:drawable="@drawable/shape_numero_pressionado" android:state_focused="true"></item>
     <item android:drawable="@drawable/shape_numero_normal"></item>
-
 </selector>
