@@ -51,7 +51,7 @@
             android:id="@+id/btnDivisao"
             style="@style/Operators_button"
             android:onClick="setOperator"
-            android:text="/"
+            android:text="@string/barra"
             android:textColor="@color/white"
             android:layout_width="0dp"/>
     </LinearLayout>

@@ -16,4 +16,5 @@
     <string name="mais">+</string>
     <string name="menos">-</string>
     <string name="x">x</string>
+    <string name="barra">/</string>
 </resources>
