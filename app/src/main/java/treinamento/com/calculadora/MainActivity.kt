@@ -1,98 +1,81 @@
 package treinamento.com.calculadora
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+ class MainActivity : AppCompatActivity() {
 
-    private lateinit var txtResult: TextView
-    private lateinit var txtExpressao: TextView
-    private var resultConta : Int = 0;
-    private lateinit var lastOperator : String;
-    private var oneNumber : Int = 0;
-    private var resultExist : Boolean = false;
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.txtResult = findViewById(R.id.txtResult)
-        this.txtExpressao = findViewById(R.id.txtExpressao)
 
-        supportActionBar?.hide();
-    }
+        //Numbers
+        tvOne.setOnClickListener { appendOnExpresstion("1", true) }
+        tvTwo.setOnClickListener { appendOnExpresstion("2", true) }
+        tvThree.setOnClickListener { appendOnExpresstion("3", true) }
+        tvFour.setOnClickListener { appendOnExpresstion("4", true) }
+        tvFive.setOnClickListener { appendOnExpresstion("5", true) }
+        tvSix.setOnClickListener { appendOnExpresstion("6", true) }
+        tvSeven.setOnClickListener { appendOnExpresstion("7", true) }
+        tvEight.setOnClickListener { appendOnExpresstion("8", true) }
+        tvNine.setOnClickListener { appendOnExpresstion("9", true) }
+        tvZero.setOnClickListener { appendOnExpresstion("0", true) }
+        tvDot.setOnClickListener { appendOnExpresstion(".", true) }
 
-    fun setNumber(view: View) {
+        //Operators
+        tvPlus.setOnClickListener { appendOnExpresstion("+", false) }
+        tvMinus.setOnClickListener { appendOnExpresstion("-", false) }
+        tvMul.setOnClickListener { appendOnExpresstion("*", false) }
+        tvDivide.setOnClickListener { appendOnExpresstion("/", false) }
+        tvOpen.setOnClickListener { appendOnExpresstion("(", false) }
+        tvClose.setOnClickListener { appendOnExpresstion(")", false) }
 
-        if(resultExist == true){
-            limparText();
-            resultExist = false;
+        tvClear.setOnClickListener {
+            tvExpression= ""
+            tvResult = ""
         }
 
-        val botao = view as Button
-        when (view.id) {
-            R.id.numberOne ->
-                txtResult.text = txtResult.text.toString() + "1";
-            R.id.numberTwo ->
-                txtResult.text = txtResult.text.toString() + "2";
-            R.id.numberThree ->
-                txtResult.text = txtResult.text.toString() + "3";
-            R.id.numberFour ->
-                txtResult.text = txtResult.text.toString() + "4";
-            R.id.numberFive ->
-                txtResult.text = txtResult.text.toString() + "5";
-            R.id.numberSix ->
-                txtResult.text = txtResult.text.toString() + "6";
-            R.id.numberSeven ->
-                txtResult.text = txtResult.text.toString() + "7";
-            R.id.numberEight ->
-                txtResult.text = txtResult.text.toString() + "8";
-            R.id.numberNine ->
-                txtResult.text = txtResult.text.toString() + "9";
-            R.id.numberZero ->
-                txtResult.text = txtResult.text.toString() + "0";
-        }
-    }
-
-    fun setOperator(view: View){
-        oneNumber = txtResult.text.toString().toInt();
-
-        if(resultExist == false){
-            resultExist = true;
-        }
-
-        when (view.id) {
-            R.id.btnLimpar -> {
-                limparText();
+        tvBack.setOnClickListener {
+            val string = tvExpression.text.toString()
+            if(string.isNotEmpty()){
+                tvExpression = string.substring(0,string.length-1)
             }
-            R.id.equal ->{
-                calcular(lastOperator);
-            }
-            R.id.numberPlus ->{
-                resultConta += oneNumber
-                txtExpressao.text =  txtExpressao.text.toString() + txtResult.text.toString() +  "+"
-                txtResult.text = resultConta.toString();
-                lastOperator = "+";
+            tvResult = ""
+        }
+
+        tvEquals.setOnClickListener {
+            try {
+
+                val expression = ExpressionBuilder(tvExpression.text.toString()).build()
+                val result = expression.evaluate()
+                val longResult = result.toLong()
+                if(result == longResult.toDouble())
+                    tvResult = longResult.toString()
+                else
+                    tvResult = result.toString()
+
+            }catch (e:Exception){
+                Log.d("Exception"," message : " + e.message )
             }
         }
 
-        Log.d("SUM", resultConta.toString());
     }
 
-    private fun calcular(lastOperator: String) {
-        when (lastOperator) {
-            "+" -> "";
-            "-" -> "";
-            "x" -> "";
-            "/" -> "";
+    fun appendOnExpresstion(string: String, canClear: Boolean) {
+
+        if(tvResult.text.isNotEmpty()){
+            tvExpression = ""
+        }
+
+        if (canClear) {
+            tvResult = ""
+            tvExpression.append(string)
+        } else {
+            tvExpression.append(tvResult.text)
+            tvExpression.append(string)
+            tvResult = ""
         }
     }
-
-    fun limparText(){
-        txtResult.text = "";
-    }
-
 }
+
+
 
