@@ -16,7 +16,8 @@
         android:gravity="end"
         android:orientation="horizontal"
         android:singleLine="true"
-        android:textColor="@color/black"
+        android:background="@color/gray"
+        android:textColor="@color/white"
         android:textSize="30sp"></TextView>
 
     <TextView
@@ -27,7 +28,8 @@
         android:gravity="end"
         android:maxLines="1"
         android:orientation="horizontal"
-        android:textColor="@color/black"
+        android:background="@color/gray"
+        android:textColor="@color/white"
         android:textSize="45sp"></TextView>
 
     <LinearLayout
