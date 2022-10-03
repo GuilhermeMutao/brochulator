@@ -1,81 +1,236 @@
 package treinamento.com.calculadora
 
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
- class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
+    private lateinit var txtOperacaoInserida: TextView
+    private lateinit var txtOperacaoRealizada: TextView
+    private var resultConta: Int = 0;
+    private lateinit var lastOperator: String;
+    private var numeroSecundarioInserido: Int = 0;
+    private var jaClicado: Boolean = false;
+    private var auxiliarNumero: Int = 0;
+    private var resultExist: Boolean = false;
+    private var jaCalculado: Boolean = false;
+    private var primeiraEntrada: Boolean = true;
 
-   override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        this.txtOperacaoInserida = findViewById(R.id.txtResult)
+        this.txtOperacaoRealizada = findViewById(R.id.txtExpressao)
 
-        //Numbers
-        tvOne.setOnClickListener { appendOnExpresstion("1", true) }
-        tvTwo.setOnClickListener { appendOnExpresstion("2", true) }
-        tvThree.setOnClickListener { appendOnExpresstion("3", true) }
-        tvFour.setOnClickListener { appendOnExpresstion("4", true) }
-        tvFive.setOnClickListener { appendOnExpresstion("5", true) }
-        tvSix.setOnClickListener { appendOnExpresstion("6", true) }
-        tvSeven.setOnClickListener { appendOnExpresstion("7", true) }
-        tvEight.setOnClickListener { appendOnExpresstion("8", true) }
-        tvNine.setOnClickListener { appendOnExpresstion("9", true) }
-        tvZero.setOnClickListener { appendOnExpresstion("0", true) }
-        tvDot.setOnClickListener { appendOnExpresstion(".", true) }
+        supportActionBar?.hide();
+    }
 
-        //Operators
-        tvPlus.setOnClickListener { appendOnExpresstion("+", false) }
-        tvMinus.setOnClickListener { appendOnExpresstion("-", false) }
-        tvMul.setOnClickListener { appendOnExpresstion("*", false) }
-        tvDivide.setOnClickListener { appendOnExpresstion("/", false) }
-        tvOpen.setOnClickListener { appendOnExpresstion("(", false) }
-        tvClose.setOnClickListener { appendOnExpresstion(")", false) }
+    fun setNumber(view: View) {
 
-        tvClear.setOnClickListener {
-            tvExpression= ""
-            tvResult = ""
+        if (resultExist == true) {
+            limparText();
+            resultExist = false;
         }
 
-        tvBack.setOnClickListener {
-            val string = tvExpression.text.toString()
-            if(string.isNotEmpty()){
-                tvExpression = string.substring(0,string.length-1)
-            }
-            tvResult = ""
+        when (view.id) {
+            R.id.numberOne ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "1";
+            R.id.numberTwo ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "2";
+            R.id.numberThree ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "3";
+            R.id.numberFour ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "4";
+            R.id.numberFive ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "5";
+            R.id.numberSix ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "6";
+            R.id.numberSeven ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "7";
+            R.id.numberEight ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "8";
+            R.id.numberNine ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "9";
+            R.id.numberZero ->
+                txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "0";
+        }
+    }
+
+    fun setOperator(view: View) {
+
+        try{
+        if (resultExist == false) {
+            resultExist = true;
         }
 
-        tvEquals.setOnClickListener {
-            try {
-
-                val expression = ExpressionBuilder(tvExpression.text.toString()).build()
-                val result = expression.evaluate()
-                val longResult = result.toLong()
-                if(result == longResult.toDouble())
-                    tvResult = longResult.toString()
-                else
-                    tvResult = result.toString()
-
-            }catch (e:Exception){
-                Log.d("Exception"," message : " + e.message )
+        when (view.id) {
+            R.id.btnLimpar -> {
+                encerrarCalculo();
             }
+            R.id.equal -> {
+                calcular(lastOperator)
+            }
+            R.id.dot ->{
+                if (txtOperacaoInserida.length() == 0) {
+                    txtOperacaoInserida.text = txtOperacaoInserida.text.toString() + "0.";
+                }
+
+            }
+            R.id.delete ->{
+                Log.d("r", "sda");
+                if (txtOperacaoInserida.length() > 0) {
+                    txtOperacaoInserida.text = txtOperacaoInserida.text.toString().substring(0, txtOperacaoInserida.length() - 1);
+                }
+            }
+            R.id.numberPlus -> {
+                if (!jaCalculado) {
+                    auxiliarNumero = txtOperacaoInserida.text.toString().toInt();
+                    txtOperacaoRealizada.text = auxiliarNumero.toString() + "+";
+                    jaCalculado = true;
+                }else{
+                    jaClicado = false;
+                }
+
+                txtOperacaoInserida.text = resultConta.toString();
+
+                lastOperator = "+";
+            }
+            R.id.numberMinus -> {
+                if (!jaCalculado) {
+                    auxiliarNumero = txtOperacaoInserida.text.toString().toInt();
+                    txtOperacaoRealizada.text = auxiliarNumero.toString() + "-";
+                    jaCalculado = true;
+                }else{
+                    jaClicado = false;
+                }
+
+                txtOperacaoInserida.text = resultConta.toString();
+
+                lastOperator = "-";
+            }
+            R.id.numberMutiplication -> {
+                if (!jaCalculado) {
+                    auxiliarNumero = txtOperacaoInserida.text.toString().toInt();
+                    txtOperacaoRealizada.text = auxiliarNumero.toString() + "-";
+                    jaCalculado = true;
+                }else{
+                    jaClicado = false;
+                }
+
+                txtOperacaoInserida.text = resultConta.toString();
+
+                lastOperator = "*";
+            }
+            R.id.btnDivisao ->{
+                if (!jaCalculado) {
+                    auxiliarNumero = txtOperacaoInserida.text.toString().toInt();
+                    txtOperacaoRealizada.text = auxiliarNumero.toString() + "/";
+                    jaCalculado = true;
+                }else{
+                    jaClicado = false;
+                }
+
+                txtOperacaoInserida.text = resultConta.toString();
+
+                lastOperator = "/";
+            }
+        }
+    }catch (e: Exception){
+        Log.d("EXCEPTION", e.toString());
+    }
+
+    }
+
+    fun encerrarCalculo() {
+        txtOperacaoInserida.text = "";
+        txtOperacaoRealizada.text = "";
+        resultConta = 0;
+        lastOperator = "";
+        numeroSecundarioInserido = 0;
+        resultExist = false;
+        jaCalculado = false;
+        jaClicado = false;
+        primeiraEntrada = true;
+        auxiliarNumero = 0;
+    }
+
+
+
+    private fun calcular(lastOperator: String) {
+        try {
+            when (lastOperator) {
+                "+" -> {
+                    if(!jaClicado){
+                        numeroSecundarioInserido = txtOperacaoInserida.text.toString().toInt();
+
+                        resultConta = auxiliarNumero + txtOperacaoInserida.text.toString().toInt();
+                        txtOperacaoRealizada.text = auxiliarNumero.toString() + " + " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                        jaClicado = true;
+                    }else{
+                        resultConta += numeroSecundarioInserido;
+                        txtOperacaoRealizada.text = txtOperacaoInserida.text.toString() + " + " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                    }
+                }
+                "-" -> {
+                    if(!jaClicado){
+                        numeroSecundarioInserido = txtOperacaoInserida.text.toString().toInt();
+
+                        resultConta = auxiliarNumero - txtOperacaoInserida.text.toString().toInt();
+                        txtOperacaoRealizada.text = auxiliarNumero.toString() + " - " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                        jaClicado = true;
+                    }else{
+                        resultConta -= numeroSecundarioInserido;
+                        txtOperacaoRealizada.text = txtOperacaoInserida.text.toString() + " - " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                    }
+                };
+                "*" -> {
+                    if(!jaClicado){
+                        numeroSecundarioInserido = txtOperacaoInserida.text.toString().toInt();
+
+                        resultConta = auxiliarNumero * txtOperacaoInserida.text.toString().toInt();
+                        txtOperacaoRealizada.text = auxiliarNumero.toString() + " * " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                        jaClicado = true;
+                    }else{
+                        resultConta *= numeroSecundarioInserido;
+                        txtOperacaoRealizada.text = txtOperacaoInserida.text.toString() + " * " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                    }
+                };
+                "/" -> {
+                    if(!jaClicado){
+                        numeroSecundarioInserido = txtOperacaoInserida.text.toString().toInt();
+
+                        resultConta = auxiliarNumero / txtOperacaoInserida.text.toString().toInt();
+                        txtOperacaoRealizada.text = auxiliarNumero.toString() + " / " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                        jaClicado = true;
+                    }else{
+                        resultConta /= numeroSecundarioInserido;
+                        txtOperacaoRealizada.text = txtOperacaoInserida.text.toString() + " / " + numeroSecundarioInserido.toString();
+                        txtOperacaoInserida.text = resultConta.toString();
+                    }
+                };
+            }
+        }catch (e: Exception){
+            Log.d("EXCEPTION", e.toString());
         }
 
     }
 
-    fun appendOnExpresstion(string: String, canClear: Boolean) {
-
-        if(tvResult.text.isNotEmpty()){
-            tvExpression = ""
-        }
-
-        if (canClear) {
-            tvResult = ""
-            tvExpression.append(string)
-        } else {
-            tvExpression.append(tvResult.text)
-            tvExpression.append(string)
-            tvResult = ""
-        }
+    fun limparText() {
+        txtOperacaoInserida.text = "";
     }
+
+
 }
-
-
 
